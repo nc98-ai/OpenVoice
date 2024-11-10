@@ -1,0 +1,49 @@
+# install openvoice v1/v2 sur Windows (PowerShell)
+####################################################
+
+
+git clone https://github.com/myshell-ai/OpenVoice.git
+cd OpenVoice
+conda -n create OpenVoice python=3.9
+conda activate OpenVoice
+python -V                   # to check python version 3.9
+pip install ipykernel
+pip install -r requirements.txt
+conda install ffmpeg #pip insuffisant -> utilisation de conda
+wget https://myshell-public-repo-host.s3.amazonaws.com/openvoice/checkpoints_1226.zip
+Expand-Archive .\checkpoints_1226.zip .
+
+wget https://myshell-public-repo-host.s3.amazonaws.com/openvoice/checkpoints_v2_0417.zip
+Expand-Archive .\checkpoints_v2_0417.zip .
+
+#telecharger et installer l'ecextable cudnn 
+https://docs.nvidia.com/deeplearning/cudnn/latest/installation/windows.html
+
+#telecharger les libs cudnn pour windows
+wget https://github.com/Purfview/whisper-standalone-win/releases/download/libs/cuBLAS.and.cuDNN_CUDA11_win_v4.7z  -OutFile cuBLAS.and.cuDNN_CUDA11_win_v4.7z 
+
+#copier les fichiers cudnn téléchargés dans la location révélée par la commande : pip show ctranslate2   (c:\users\cmoi\anaconda3\envs\openvoicev2\lib\site-packages\ctranslate2)
+
+#installer MeloTTS
+pip install git+https://github.com/myshell-ai/MeloTTS.git
+python -m unidic download
+
+# installer CUDNN avec pip
+pip install nvidia-cudnn-cu11  
+
+# installer data NLTK
+python -c "import nltk; nltk.download('averaged_perceptron_tagger_eng')"
+python -c "import nltk; nltk.download('all')"
+
+
+#OPTION: UTILISATION DU GPU
+nvcc --version #obtenir la version de CUDA installé
+
+# installer CUDA Toolkit
+https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local
+
+#Test
+########
+# Exécute demo_part1.pny
+# Exécute demo_part2.pny
+# Exécute demo_part3.pny
